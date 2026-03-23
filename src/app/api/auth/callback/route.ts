@@ -1,0 +1,22 @@
+import { NextRequest, NextResponse } from "next/server";
+import { exchangeCode, getGoogleUser } from "@/lib/auth";
+import { setSession } from "@/lib/session";
+
+export async function GET(request: NextRequest) {
+  const code = request.nextUrl.searchParams.get("code");
+  const state = request.nextUrl.searchParams.get("state");
+  const redirectTo = state ? decodeURIComponent(state) : "/";
+
+  if (!code) {
+    return NextResponse.redirect(new URL("/login?error=no_code", request.url));
+  }
+
+  try {
+    const { accessToken } = await exchangeCode(code);
+    const user = await getGoogleUser(accessToken);
+    await setSession(user.email, user.name);
+    return NextResponse.redirect(new URL(redirectTo, request.url));
+  } catch {
+    return NextResponse.redirect(new URL("/login?error=auth_failed", request.url));
+  }
+}
