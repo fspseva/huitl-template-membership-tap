@@ -39,7 +39,8 @@ export default async function TapPage({ searchParams }: TapPageProps) {
     }
 
     return <ErrorCard message={data.message || "Verification failed."} />;
-  } catch {
+  } catch (err) {
+    console.error("Tap page error:", err);
     return <ErrorCard message="Verification temporarily unavailable. Please try again." />;
   }
 }

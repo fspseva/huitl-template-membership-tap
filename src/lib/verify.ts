@@ -67,7 +67,9 @@ export async function verifyMemberCard(piccData: string, cmac: string): Promise<
 
   // 3. Get session and resolve role
   const session = await getSession();
-  if (session) await refreshSession();
+  // Note: refreshSession() is NOT called here because this function
+  // may run in a server component (tap page) where cookies can't be set.
+  // Session refresh happens in the API route wrapper instead.
 
   // Check member status — revoked members
   if (member.status === "revoked") {

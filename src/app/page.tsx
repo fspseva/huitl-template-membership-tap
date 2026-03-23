@@ -1,4 +1,8 @@
-export default function Home() {
+import { getSession } from "@/lib/session";
+
+export default async function Home() {
+  const session = await getSession();
+
   return (
     <div className="w-full max-w-[420px] bg-[var(--card)] rounded-[28px] p-6 pb-8 flex flex-col items-center shadow-2xl shadow-black/50 border border-white/[0.02]">
       <div className="w-16 h-16 mb-6 flex items-center justify-center">
@@ -14,6 +18,20 @@ export default function Home() {
       <p className="text-[var(--muted)] text-center text-[15px] leading-relaxed mb-8">
         Tap your membership card to check in.
       </p>
+
+      {session ? (
+        <p className="text-[var(--accent)] text-[14px] mb-4">
+          Signed in as {session.name}
+        </p>
+      ) : (
+        <a
+          href="/login"
+          className="w-full bg-white/10 text-[var(--foreground)] font-semibold text-[14px] rounded-xl py-3 flex items-center justify-center mb-4 hover:bg-white/15 transition-colors"
+        >
+          Sign in
+        </a>
+      )}
+
       <p className="text-[var(--muted)]/50 text-[12px] font-mono">
         Powered by HUITL Protocol
       </p>
