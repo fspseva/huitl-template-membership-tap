@@ -1,4 +1,5 @@
 import { getSession } from "@/lib/session";
+import { LogoutButton } from "@/components/LogoutButton";
 
 export default async function Home() {
   const session = await getSession();
@@ -20,9 +21,12 @@ export default async function Home() {
       </p>
 
       {session ? (
-        <p className="text-[var(--accent)] text-[14px] mb-4">
-          Signed in as {session.name}
-        </p>
+        <div className="flex flex-col items-center gap-2 mb-4">
+          <p className="text-[var(--accent)] text-[14px]">
+            Signed in as {session.name}
+          </p>
+          <LogoutButton />
+        </div>
       ) : (
         <a
           href="/login"
