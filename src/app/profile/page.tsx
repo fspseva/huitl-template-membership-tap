@@ -41,7 +41,7 @@ export default function ProfilePage() {
     fetch("/api/profile")
       .then(r => {
         if (r.status === 401) {
-          window.location.href = "/login?redirectTo=/profile";
+          window.location.href = "/?redirectTo=/profile";
           return null;
         }
         return r.json();

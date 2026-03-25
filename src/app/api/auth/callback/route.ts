@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
   const redirectTo = state ? decodeURIComponent(state) : "/";
 
   if (!code) {
-    return NextResponse.redirect(new URL("/login?error=no_code", request.url));
+    return NextResponse.redirect(new URL("/?error=no_code", request.url));
   }
 
   try {
@@ -17,6 +17,6 @@ export async function GET(request: NextRequest) {
     await setSession(user.email, user.name);
     return NextResponse.redirect(new URL(redirectTo, request.url));
   } catch {
-    return NextResponse.redirect(new URL("/login?error=auth_failed", request.url));
+    return NextResponse.redirect(new URL("/?error=auth_failed", request.url));
   }
 }

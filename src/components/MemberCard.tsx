@@ -90,7 +90,7 @@ export function MemberCard({ member, viewerRole, clubName, tapUrl }: Props) {
 
       {viewerRole === "public" && (
         <a
-          href={`/login?redirectTo=${encodeURIComponent(tapUrl || "/")}`}
+          href={`/?redirectTo=${encodeURIComponent(tapUrl || "/")}`}
           className="w-full bg-white/10 text-[var(--foreground)] font-semibold text-[14px] rounded-xl py-3 flex items-center justify-center mt-2 hover:bg-white/15 transition-colors"
         >
           Sign in to see more
