@@ -4,16 +4,16 @@ import type { ViewerRole } from "../../src/lib/roles";
 
 const customFields = [
   { id: "dietary", name: "Dietary Preferences", display_type: "text" as const, editable_by_member: true, default_sharing: "staff" as const },
-  { id: "collection", name: "Car Collection", display_type: "image-gallery" as const, editable_by_member: true, default_sharing: "everyone" as const },
+  { id: "collection", name: "Hobbies", display_type: "image-gallery" as const, editable_by_member: true, default_sharing: "everyone" as const },
   { id: "notes", name: "VIP Notes", display_type: "text" as const, editable_by_member: false, default_sharing: "staff" as const },
   { id: "interests", name: "Interests", display_type: "badge-list" as const, editable_by_member: true, default_sharing: "members" as const },
 ];
 
 const customData: Record<string, unknown> = {
   dietary: "Vegetarian",
-  collection: [{ model: "911 GT3", year: 2024 }],
+  collection: [{ model: "Photo 1", year: 2024 }],
   notes: "Always seats by window",
-  interests: ["Track days", "Coffee"],
+  interests: ["Reading", "Coffee"],
 };
 
 const sharingPrefs: Record<string, string> = {

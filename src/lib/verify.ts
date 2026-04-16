@@ -18,7 +18,7 @@ export async function verifyMemberCard(piccData: string, cmac: string): Promise<
   // 1. Verify via huitl-cloud
   let verification;
   try {
-    verification = await huitlApi(`/v1/verify?picc_data=${piccData}&cmac=${cmac}`);
+    verification = await huitlApi(`/v1/verify?picc_data=${encodeURIComponent(piccData)}&cmac=${encodeURIComponent(cmac)}`);
   } catch {
     return { verified: "error", error: "Verification temporarily unavailable. Please try again." };
   }

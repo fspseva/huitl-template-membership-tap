@@ -55,10 +55,19 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: "Member not found" }, { status: 404 });
   }
 
-  const body = await request.json();
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
   const updates: Record<string, unknown> = { updatedAt: new Date() };
 
   if (body.name && typeof body.name === "string") {
+    if (body.name.length > 200) {
+      return NextResponse.json({ error: "Name too long (max 200 characters)" }, { status: 400 });
+    }
     updates.name = body.name;
   }
 
@@ -79,7 +88,14 @@ export async function PATCH(request: NextRequest) {
   }
 
   if (body.sharingPrefs && typeof body.sharingPrefs === "object") {
-    updates.sharingPrefs = { ...(member.sharingPrefs as Record<string, string>), ...body.sharingPrefs };
+    const VALID_SHARING_LEVELS = ["everyone", "members", "staff", "none"];
+    const sanitizedPrefs: Record<string, string> = {};
+    for (const [key, value] of Object.entries(body.sharingPrefs)) {
+      if (typeof value === "string" && VALID_SHARING_LEVELS.includes(value)) {
+        sanitizedPrefs[key] = value;
+      }
+    }
+    updates.sharingPrefs = { ...(member.sharingPrefs as Record<string, string>), ...sanitizedPrefs };
   }
 
   await db.update(schema.members)

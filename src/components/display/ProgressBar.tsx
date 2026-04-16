@@ -5,7 +5,7 @@ interface ProgressValue {
 }
 
 export function ProgressBar({ name, value }: { name: string; value: ProgressValue }) {
-  const pct = Math.min(100, Math.max(0, (value.current / value.max) * 100));
+  const pct = value.max === 0 ? 0 : Math.min(100, Math.max(0, (value.current / value.max) * 100));
   return (
     <div className="bg-[var(--inner-card)] rounded-[16px] p-4">
       <div className="flex justify-between items-center mb-2">
